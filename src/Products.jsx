@@ -1,4 +1,15 @@
+import { useEffect, useState } from "react"
+import { getProducts } from "./hooks/userProducts.jsx"
+
 const Products = () => {
+    const [products, setProducts] = useState([])
+    useEffect(() => {
+       const response =  getProducts()
+       response.then((response) => {
+        setProducts(response.data.products)
+       })
+    }, [])
+    const array = ['a', 'b', 'c']
     return(<>
         <h1 className="heading">Products</h1>
         <table className="table">
@@ -9,10 +20,16 @@ const Products = () => {
                 <th className="tableHead">Action</th>
             </thead>
             <tbody>
-                <td>Iphones</td>
-                <td>10</td>
-                <td>250000</td>
-                <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                {products.map((product) => {
+                    return(
+                        <tr>
+                            <td>{product.name}</td>
+                            <td>{product.unit}</td>
+                            <td>{product.price}</td>
+                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
+                        </tr>
+                    )
+                })}
             </tbody>
         </table>
     </>)
