@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { getProducts } from "./hooks/userProducts.jsx"
+import { getProducts, deleteProduct } from "./hooks/userProducts.jsx"
 import { Link, useNavigate } from "react-router"
 import { ToastContainer, toast } from "react-toastify"
 
@@ -11,6 +11,28 @@ const Products = () => {
         setProducts(response.data.products)
        })
     }, [])
+
+    const productDelete = (id) => {
+        const response = deleteProduct(id)
+
+        response.then((response) => {
+            const message = response.data.message
+            if(response.status == 200){
+                window.location.reload();
+                toast.success(message, {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "light"
+                    })
+            }
+            
+        })
+    }
     return(<>
     <div className="flex justify-between mx-8 my-3">
         <h1 className="font-bold text-2xl text-center mx-4">Products Details</h1>
@@ -50,7 +72,9 @@ const Products = () => {
                 {product.price}
                 </td>
                 <td class="px-6 py-4 text-right">
-                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a> | <a href="#" class="font-medium text-blue-600 hover:underline">Delete</a>
+                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a> | <a href="#" class="font-medium text-blue-600 hover:underline" onClick={() => {
+                        productDelete(product.id)
+                    }}>Delete</a>
                 </td>
             </tr>
                 )
