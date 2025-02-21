@@ -6,6 +6,7 @@ import User from './User.jsx'
 import Count from './Count.jsx'
 import { Route, Routes } from 'react-router'
 import Products from './Products.jsx'
+import AddProduct from './AddProduct.jsx'
 
 const App = () => {
   
@@ -15,7 +16,8 @@ const App = () => {
       <Routes>
         <Route path='user' element={<User/>}/>
         <Route path='count' element={<Count/>}/>
-        <Route path='products' element={<Products/>}/>
+        <Route path='/' element={<Products/>}/>
+        <Route path='/add-product' element={<AddProduct/>}/>
       </Routes>
     </>
   )

@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { getProducts } from "./hooks/userProducts.jsx"
+import { Link, useNavigate } from "react-router"
+import { ToastContainer, toast } from "react-toastify"
 
 const Products = () => {
     const [products, setProducts] = useState([])
@@ -9,29 +11,57 @@ const Products = () => {
         setProducts(response.data.products)
        })
     }, [])
-    const array = ['a', 'b', 'c']
     return(<>
-        <h1 className="heading">Products</h1>
-        <table className="table">
-            <thead>
-                <th className="tableHead">Product Name</th>
-                <th className="tableHead">Units</th>
-                <th className="tableHead">Price</th>
-                <th className="tableHead">Action</th>
-            </thead>
-            <tbody>
-                {products.map((product) => {
-                    return(
-                        <tr>
-                            <td>{product.name}</td>
-                            <td>{product.unit}</td>
-                            <td>{product.price}</td>
-                            <td><a href="#">Edit</a> | <a href="#">Delete</a></td>
-                        </tr>
-                    )
-                })}
-            </tbody>
-        </table>
+    <div className="flex justify-between mx-8 my-3">
+        <h1 className="font-bold text-2xl text-center mx-4">Products Details</h1>
+        <Link to="/add-product"
+         class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Add Product</Link>
+    </div>
+    
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50">
+            <tr>
+                <th scope="col" class="px-6 py-3">
+                    Product Name
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Product Unit
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Product Price
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            {products && products.map((product) => {
+                return(
+            <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 ">
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                {product.name}
+                </th>
+                <td class="px-6 py-4">
+                {product.unit}
+                </td>
+                <td class="px-6 py-4">
+                {product.price}
+                </td>
+                <td class="px-6 py-4 text-right">
+                    <a href="#" class="font-medium text-blue-600 hover:underline">Edit</a> | <a href="#" class="font-medium text-blue-600 hover:underline">Delete</a>
+                </td>
+            </tr>
+                )
+            })}
+        </tbody>
+    </table>
+
+    <ToastContainer/>
+</div>
+
+
     </>)
 }
 
